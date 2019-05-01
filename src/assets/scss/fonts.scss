@@ -1,0 +1,87 @@
+@import './variables.scss';
+
+// OpenSans font
+@font-face {
+  font-family: $primary-font-family;
+  font-weight: normal;
+  src:  url(../fonts/OpenSans/OpenSans-Regular.ttf) format('truetype')
+}
+
+@font-face {
+  font-family: $primary-font-family;
+  font-weight: lighter;
+  src:  url(../fonts/OpenSans/OpenSans-Light.ttf) format('truetype')
+}
+
+@font-face {
+  font-family: $primary-font-family;
+  font-weight: bold;
+  src:  url(../fonts/OpenSans/OpenSans-SemiBold.ttf) format('truetype')
+}
+
+@font-face {
+  font-family: $primary-font-family;
+  font-style: italic;
+  src:  url(../fonts/OpenSans/OpenSans-Italic.ttf) format('truetype')
+}
+
+// vpp font icons
+@font-face {
+  font-family: $icon-font-family;
+  font-style: normal;
+  font-weight: normal;
+  src: url(../fonts/Vpp-icons/VPP_all_icons.eot); /* For IE6-8 */
+  src: local($icon-font-family),
+       url(../fonts/Vpp-icons/VPP_all_icons.woff) format('woff'),
+       url(../fonts/Vpp-icons/VPP_all_icons.ttf) format('truetype');
+}
+
+:global{    
+  .vpp-icons {
+    font-family: $icon-font-family;
+  }
+}
+
+// Material design icons
+@font-face {
+  font-family: $material-icons-font-family;
+  font-style: normal;
+  font-weight: 400;
+  src: url(../fonts/Material-Icons/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local($material-icons-font-family),
+       local('MaterialIcons-Regular'),
+       url(../fonts/Material-Icons/MaterialIcons-Regular.woff2) format('woff2'),
+       url(../fonts/Material-Icons/MaterialIcons-Regular.woff) format('woff'),
+       url(../fonts/Material-Icons/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+:global{
+  .material-icons {
+    font-family: $material-icons-font-family!important;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+          
+    &:hover {
+      cursor: pointer!important;
+    }
+  
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+  
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+  
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+  }  
+}

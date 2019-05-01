@@ -1,0 +1,33 @@
+$icon-arrows-down: '\e904';
+$icon-dashboard: '\e906';
+$icon-events: '\e909';
+$icon-alerts: '\e901';
+$icon-vpp: '\e90e';
+$icon-calendar: '\e907';
+$icon-clock: '\e90b';
+
+:global{  
+  .icon-dashboard::before{
+    content: $icon-dashboard;
+  }
+
+  .icon-events::before{
+    content: $icon-events;
+  }
+
+  .icon-alerts::before{
+    content: $icon-alerts;
+  }
+
+  .icon-vpp::before{
+    content: $icon-vpp;
+  }
+
+  .icon-calendar:before{
+    content: $icon-calendar;
+  }
+
+  .icon-clock:before{
+    content: $icon-clock;
+  }
+}
