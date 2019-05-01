@@ -4,10 +4,12 @@ import { connect } from 'react-redux';
 import HeaderComponent from '../../components/header/header.component';
 import Container from './styles';
 import { bindActionCreators } from 'redux';
-import { StartLoaderAction, StopLoaderAction } from '../../../common/state/shared/shared.actions.js';
+import { StartLoaderAction, StopLoaderAction, ChangeLanguageAction } from '../../../common/state/shared/shared.actions.js';
 import { FetchLoggedInUserAction } from '../../../common/state/auth/auth.actions.js';
 import Iuser from '../../../common/state/auth/auth.models';
 import SpinnerComponent from '../../components/spinner/spinner.component.jsx';
+import DrawerComponent from '../../components/drawer/drawer.component';
+import { OpenDrawerAction, CloseDrawerAction } from '../../../common/state/drawer/drawer.actions';
 
 interface Iprops {
   user: Iuser,
@@ -17,12 +19,19 @@ interface Iprops {
   path: string,
   component: React.FC<any>,
   openDrawer: React.EventHandler<any>,
+  closeDrawer: React.EventHandler<any>,
+  changeLanguage: React.EventHandler<any>,
   title: string,
-  loading: boolean
+  loading: boolean,
+  isDrawerRender: boolean,
+  isRtl: boolean,
+  languages: Array<string>,
+  language: string
 }
 
 const DefaultLayout: React.FC<Iprops> = ({
-  user, path, component: Component, openDrawer, title, startLoader, fetchUser, stopLoader, loading
+  user, path, component: Component, openDrawer, closeDrawer, title, changeLanguage,
+  startLoader, fetchUser, stopLoader, loading, isDrawerRender, languages, language, isRtl
 }) => {
 
   useEffect(() => {
@@ -34,10 +43,20 @@ const DefaultLayout: React.FC<Iprops> = ({
     <Route
       path={path}
       render={matchProps => (
-        <div>
+        <div dir={isRtl ? 'rtl' : 'ltr'}>
           <HeaderComponent openDrawer={openDrawer} loggedInUser={user} title={title} />
           <Container>
             {loading && <SpinnerComponent />}
+
+            <DrawerComponent
+              languages={languages}
+              language={language}
+              open={isDrawerRender}
+              closeDrawer={closeDrawer}
+              onChangeLanguage={changeLanguage}
+              isRtl={isRtl}
+            />
+
             {user && <Component {...matchProps} />}
           </Container>
         </div>
@@ -50,14 +69,21 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     startLoader: bindActionCreators(StartLoaderAction, dispatch),
     stopLoader: bindActionCreators(StopLoaderAction, dispatch),
-    fetchUser: bindActionCreators(FetchLoggedInUserAction, dispatch)
+    openDrawer: bindActionCreators(OpenDrawerAction, dispatch),
+    closeDrawer: bindActionCreators(CloseDrawerAction, dispatch),
+    fetchUser: bindActionCreators(FetchLoggedInUserAction, dispatch),
+    changeLanguage: bindActionCreators(ChangeLanguageAction, dispatch),
   }
 }
 
 const mapStateToProps = (state: any) => {
   return {
+    isRtl: state.shared.isRtl(),
     user: state.auth.loggedInUser,
-    loading: state.shared.loading
+    loading: state.shared.loading,
+    isDrawerRender: state.drawer.isRender,
+    language: state.shared.language,
+    languages: state.shared.supportedLanguages,
   }
 }
 

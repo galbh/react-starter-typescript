@@ -1,10 +1,12 @@
 import AppBar from '@material-ui/core/AppBar';
-import styled from 'styled-components/macro';
+import styled, { AnyStyledComponent } from 'styled-components';
 
-export const Header = styled(AppBar)`  
+export const Header: AnyStyledComponent = styled(AppBar)`  
+  && {
+    background-color: ${({ theme }) => theme.colors.primary_light};
+  }
   line-height: 60px;
-  height: 60px!important;
-  background-color: transparent!important;
+  height: 60px!important;  
   box-shadow: none!important;
   height: 64px;
   color: inherit!important;
@@ -15,7 +17,7 @@ export const Header = styled(AppBar)`
   }
 
   > div, svg{
-    color: ${props => props.theme.primary_text_color}
+    color: ${({ theme }) => theme.colors.primary_text_color}
   }
 `;
 

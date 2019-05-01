@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import HomeIcon from '@material-ui/icons/Home';
 import DashboardIcon from '@material-ui/icons/Dashboard';
@@ -13,7 +12,6 @@ import {
 } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import { ROUTES } from '../../../common/constants';
-import LogoComponent from '../logo/logo.component.jsx';
 import {
   StyledDrawer,
   WrapperRtl,
@@ -21,7 +19,16 @@ import {
   Logo
 } from './styles';
 
-const DrawerComponent = ({
+interface Iprops {
+  closeDrawer: React.EventHandler<any>,
+  open: boolean,
+  languages: any,
+  language: any,
+  onChangeLanguage: React.EventHandler<any>,
+  isRtl: boolean
+}
+
+const DrawerComponent: React.FC<Iprops> = ({
   closeDrawer,
   open,
   languages,
@@ -40,7 +47,7 @@ const DrawerComponent = ({
     >
       <Container>
 
-        <Logo><LogoComponent /></Logo>
+        <Logo>logo</Logo>
 
         <DrawerLink
           to={ROUTES.home}
@@ -61,11 +68,11 @@ const DrawerComponent = ({
           <ExpansionPanelSummary>{t('LANGUAGES')}</ExpansionPanelSummary>
           <List>
             {
-              Object.keys(languages).map(l => (
+              Object.keys(languages).map((l: string) => (
                 <ListItem
                   key={l}
                   button
-                  className={language === languages[l] ? 'selected' : null}
+                  className={language === languages[l] ? 'selected' : ''}
                   onClick={() => onChangeLanguage(languages[l])}
                 >
                   <ListItemText primary={l} />
@@ -80,41 +87,28 @@ const DrawerComponent = ({
   );
 };
 
-const DrawerLink = ({
+interface IdrawerLinkProps {
+  closeDrawer: React.EventHandler<any>,
+  iconSrc?: string,
+  label: string,
+  to: string,
+  icon?: React.ReactElement
+}
+
+const DrawerLink: React.FC<IdrawerLinkProps> = ({
   closeDrawer, iconSrc, label, to, icon
 }) => (
-  <NavLink
-    activeClassName="active"
-    to={to}
-  >
-    <MenuItem onClick={() => closeDrawer()}>
-      { icon }
-      { !icon && iconSrc && <img src={iconSrc} alt={`${label} link`} /> }
-      <span>{label}</span>
-    </MenuItem>
-  </NavLink>
-);
+    <NavLink
+      activeClassName="active"
+      to={to}
+    >
+      <MenuItem onClick={closeDrawer}>
+        {icon}
+        {!icon && iconSrc && <img src={iconSrc} alt={`${label} link`} />}
+        <span>{label}</span>
+      </MenuItem>
+    </NavLink>
+  );
 
-DrawerLink.propTypes = {
-  to: PropTypes.string.isRequired,
-  iconSrc: PropTypes.string,
-  icon: PropTypes.element,
-  label: PropTypes.string.isRequired,
-  closeDrawer: PropTypes.func.isRequired
-};
-
-DrawerLink.defaultProps = {
-  iconSrc: null,
-  icon: null
-};
-
-DrawerComponent.propTypes = {
-  open: PropTypes.bool.isRequired,
-  closeDrawer: PropTypes.func.isRequired,
-  onChangeLanguage: PropTypes.func.isRequired,
-  languages: PropTypes.shape({ [PropTypes.string]: PropTypes.string }).isRequired,
-  language: PropTypes.string.isRequired,
-  isRtl: PropTypes.bool.isRequired
-};
 
 export default DrawerComponent;

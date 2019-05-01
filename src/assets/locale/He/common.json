@@ -1,17 +1,3 @@
 {
-  "EVENTS": "אירועים",
-  "DASHBOARD": "דשבורד",
-  "VPP": "תחנות כח וירטואליות",
-  "ALERTS": "התראות",
-  "NETWORK_OPERATOR": "מפעיל רשת",
-  "SETTINGS": "הגדרות",
-  "LOGOUT": "התנתקות",
-  "STATUS": "מצב",
-  "SCHEDULED_EVENTS": "אירועים מתוזמנים",
-  "ACTIVE_EVENTS": "אירועים פעילים",
-  "VIEW_ALL": "רשימה מלאה",
-  "NO_GPS_BROWSER_SUPPORT": "דפדפן זה אינו תומך בזיהוי מיקומים",
-  "CANCEL_EVENT": "ביטול אירוע",
-  "CONFIRM_CANCEL_EVENT": "בטוחים כי ברצונכם לבטל את האירוע",
-  "DISCARD": "ביטול"
+  "HOME_PAGE": "דף הבית"
 }

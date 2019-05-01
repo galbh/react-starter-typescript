@@ -1,6 +1,6 @@
 import React from 'react';
-import './app.page.css';
+import { Container } from './styles';
 
-const App: React.FC = ({ children }) => <div className="App">{children}</div>;
+const App: React.FC = ({ children }) => <Container>{children}</Container>;
 
 export default App;
