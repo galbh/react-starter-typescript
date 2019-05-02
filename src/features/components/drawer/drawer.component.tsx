@@ -47,7 +47,7 @@ const DrawerComponent: React.FC<Iprops> = ({
     >
       <Container>
 
-        <Logo>logo</Logo>
+        <Logo><img src='https://dummyimage.com/600x400/000/fff' alt='logo' /></Logo>
 
         <DrawerLink
           to={ROUTES.home}

@@ -1,4 +1,3 @@
-import urlTitleDictionary from './url-title-dictionary.json';
 import { MOBILE_MAX_WIDTH } from '../../constants';
 
 const sharedState = {
@@ -8,8 +7,6 @@ const sharedState = {
   rtlLanguages: ['He'],
   isRtl() { return this.rtlLanguages.indexOf(this.language) > -1; },
   isMobile: window.innerWidth <= MOBILE_MAX_WIDTH,
-  getTitle: key => sharedState.urlTitleDictionary[key],
-  urlTitleDictionary,
   services: {}
 };
 

@@ -10,6 +10,7 @@ import Iuser from '../../../common/state/auth/auth.models';
 import SpinnerComponent from '../../components/spinner/spinner.component.jsx';
 import DrawerComponent from '../../components/drawer/drawer.component';
 import { OpenDrawerAction, CloseDrawerAction } from '../../../common/state/drawer/drawer.actions';
+import urlTitleDictionary from '../../../common/state/shared/url-title-dictionary';
 
 interface Iprops {
   user: Iuser,
@@ -21,7 +22,6 @@ interface Iprops {
   openDrawer: React.EventHandler<any>,
   closeDrawer: React.EventHandler<any>,
   changeLanguage: React.EventHandler<any>,
-  title: string,
   loading: boolean,
   isDrawerRender: boolean,
   isRtl: boolean,
@@ -30,7 +30,7 @@ interface Iprops {
 }
 
 const DefaultLayout: React.FC<Iprops> = ({
-  user, path, component: Component, openDrawer, closeDrawer, title, changeLanguage,
+  user, path, component: Component, openDrawer, closeDrawer, changeLanguage,
   startLoader, fetchUser, stopLoader, loading, isDrawerRender, languages, language, isRtl
 }) => {
 
@@ -39,6 +39,8 @@ const DefaultLayout: React.FC<Iprops> = ({
     fetchUser().then(() => stopLoader())
   }, [startLoader, fetchUser, stopLoader]);
 
+  const title: string = urlTitleDictionary[path];
+
   return (
     <Route
       path={path}
@@ -46,6 +48,7 @@ const DefaultLayout: React.FC<Iprops> = ({
         <div dir={isRtl ? 'rtl' : 'ltr'}>
           <HeaderComponent openDrawer={openDrawer} loggedInUser={user} title={title} />
           <Container>
+
             {loading && <SpinnerComponent />}
 
             <DrawerComponent

@@ -78,6 +78,10 @@ export const Logo = styled.div`
   display: flex;
   justify-content: center;
   height: 60px;
+
+  > img{
+    width: 100%;
+  }
 `;
 
 export const WrapperRtl = styled(Wrapper)`
