@@ -17,7 +17,12 @@ const myTheme: DefaultTheme = {
 
   spacing: {
     frame_padding: '32px'
+  },
+
+  sizes: {
+    font_size_regular: '12px'
   }
+
 }
 
 export { myTheme }

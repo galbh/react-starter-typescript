@@ -1,10 +1,14 @@
 import styled, { AnyStyledComponent } from 'styled-components';
-import { Drawer } from '@material-ui/core';
+import { Drawer, ExpansionPanel } from '@material-ui/core';
 
 export const StyledDrawer: AnyStyledComponent = styled(Drawer)`
+  &&, && li{
+    font-size: ${({ theme }) => theme.sizes.font_size_regular};
+  }
+  
   > div:nth-child(2) {
     width: 120px!important;
-    background: ${({ theme }) => theme.colors.primary_dark}
+    background: ${({ theme }) => theme.colors.primary_dark}    
   }
 
   height: 100%;
@@ -53,7 +57,6 @@ export const Wrapper = styled.div`
 
     li{
       padding: 0;
-      font-size: $font-size-medium;
       text-transform: uppercase;
       height: 100px;
       display: flex;
@@ -88,4 +91,13 @@ export const WrapperRtl = styled(Wrapper)`
   direction: rtl;
   text-align: right;
   justify-content: flex-start;
+`;
+
+export const Languages: AnyStyledComponent = styled(ExpansionPanel)`
+  font-size: inherit;
+  background: inherit;
+  margin: 0;
+  span{
+    font-size: ${({ theme }) => theme.sizes.font_size_regular};
+  }
 `;

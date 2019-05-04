@@ -11,6 +11,7 @@ import SpinnerComponent from '../../components/spinner/spinner.component.jsx';
 import DrawerComponent from '../../components/drawer/drawer.component';
 import { OpenDrawerAction, CloseDrawerAction } from '../../../common/state/drawer/drawer.actions';
 import urlTitleDictionary from '../../../common/state/shared/url-title-dictionary';
+import { DirectionContext } from '../../../common/contexts';
 
 interface Iprops {
   user: Iuser,
@@ -32,7 +33,7 @@ interface Iprops {
 const DefaultLayout: React.FC<Iprops> = ({
   user, path, component: Component, openDrawer, closeDrawer, changeLanguage,
   startLoader, fetchUser, stopLoader, loading, isDrawerRender, languages, language, isRtl
-}) => {
+}) => {  
 
   useEffect(() => {
     startLoader();
@@ -40,31 +41,39 @@ const DefaultLayout: React.FC<Iprops> = ({
   }, [startLoader, fetchUser, stopLoader]);
 
   const title: string = urlTitleDictionary[path];
+  const direction: string = isRtl ? 'rtl' : 'ltr';
 
   return (
-    <Route
-      path={path}
-      render={matchProps => (
-        <div dir={isRtl ? 'rtl' : 'ltr'}>
-          <HeaderComponent openDrawer={openDrawer} loggedInUser={user} title={title} />
-          <Container>
-
-            {loading && <SpinnerComponent />}
-
-            <DrawerComponent
-              languages={languages}
-              language={language}
-              open={isDrawerRender}
-              closeDrawer={closeDrawer}
-              onChangeLanguage={changeLanguage}
-              isRtl={isRtl}
+    <DirectionContext.Provider value={direction}>
+      <Route
+        path={path}
+        render={matchProps => (
+          <div dir={direction}>
+            <HeaderComponent
+              openDrawer={openDrawer}
+              loggedInUser={user}
+              title={title}
             />
 
-            {user && <Component {...matchProps} />}
-          </Container>
-        </div>
-      )}
-    />
+            <Container>
+
+              {loading && <SpinnerComponent />}
+
+              <DrawerComponent
+                languages={languages}
+                language={language}
+                open={isDrawerRender}
+                closeDrawer={closeDrawer}
+                onChangeLanguage={changeLanguage}
+                isRtl={isRtl}
+              />
+
+              {user && <Component {...matchProps} />}
+            </Container>
+          </div>
+        )}
+      />
+    </DirectionContext.Provider>
   );
 };
 

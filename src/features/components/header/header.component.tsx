@@ -5,6 +5,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 import { Header, Title } from './styles';
 import Iuser from '../../../common/state/auth/auth.models';
+import UserMenuComponent from '../user-menu/user-menu.component';
 
 interface Iprops {
   openDrawer: React.EventHandler<any>,
@@ -22,7 +23,14 @@ const HeaderComponent: React.FC<Iprops> = ({ openDrawer, loggedInUser: user, tit
             <MenuIcon />
           </IconButton>
           <Title>{t(title)}</Title>
-          {user && <div>{user.firstName} {user.lastName}</div>}
+          {
+            user &&
+            <UserMenuComponent
+              user={user}
+              open={false}
+              listOfItems={[{label: 'test', onItemClick: () => alert('test')}]}
+            />
+          }
         </Toolbar>
       </Header>
     </div>

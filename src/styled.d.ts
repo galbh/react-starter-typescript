@@ -17,6 +17,10 @@ declare module 'styled-components' {
 
     spacing: {
       frame_padding: string
+    },
+
+    sizes: {
+      font_size_regular: string
     }
   }
 }

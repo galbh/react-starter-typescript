@@ -4,7 +4,6 @@ import HomeIcon from '@material-ui/icons/Home';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import {
   MenuItem,
-  ExpansionPanel,
   ListItemText,
   ListItem,
   List,
@@ -16,7 +15,8 @@ import {
   StyledDrawer,
   WrapperRtl,
   Wrapper,
-  Logo
+  Logo,
+  Languages
 } from './styles';
 
 interface Iprops {
@@ -47,7 +47,7 @@ const DrawerComponent: React.FC<Iprops> = ({
     >
       <Container>
 
-        <Logo><img src='https://dummyimage.com/600x400/000/fff' alt='logo' /></Logo>
+        <Logo><img src='https://dummyimage.com/200x120/000/fff' alt='logo' /></Logo>
 
         <DrawerLink
           to={ROUTES.home}
@@ -64,7 +64,7 @@ const DrawerComponent: React.FC<Iprops> = ({
         />
 
         {/* Language Switcher */}
-        <ExpansionPanel style={{ margin: 0, background: 'inherit' }}>
+        <Languages style={{ margin: 0, background: 'inherit' }}>
           <ExpansionPanelSummary>{t('LANGUAGES')}</ExpansionPanelSummary>
           <List>
             {
@@ -80,7 +80,7 @@ const DrawerComponent: React.FC<Iprops> = ({
               ))
             }
           </List>
-        </ExpansionPanel>
+        </Languages>
 
       </Container>
     </StyledDrawer>

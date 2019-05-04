@@ -5,6 +5,7 @@ export default styled.div`
   overflow: auto;
   height: calc(100vh - 60px);
   background: ${({ theme }) => theme.primary_background_color};
+  font-family: 'Roboto'!important;
 
   > div{
     padding: ${({ theme }) => theme.spacing.frame_padding};
