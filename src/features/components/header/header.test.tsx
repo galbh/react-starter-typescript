@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import { mount } from 'enzyme';
 import HeaderComponent from './header.component';
 import TestUtils from '../../../utils/test-utils';
