@@ -15,11 +15,11 @@ interface Iprops {
 
 export const Button: any = styled(MaterialButton)`
   padding: 0 13px !important;
-  font-family: inherit!important;
   border-radius: 1px!important;
   height: 36px;
   width: 173px!important;
   text-transform: capitalize !important;
+  font-weight: light;
 
   &&{
     border-left: ${(props: Iprops) => props.direction === 'ltr' && border};

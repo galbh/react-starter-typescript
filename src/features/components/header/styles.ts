@@ -2,9 +2,11 @@ import AppBar from '@material-ui/core/AppBar';
 import styled, { AnyStyledComponent } from 'styled-components';
 
 export const Header: AnyStyledComponent = styled(AppBar)`  
+  
   && {
     background-color: ${({ theme }) => theme.colors.primary_light};
   }
+
   line-height: 60px;
   height: 60px!important;  
   box-shadow: none!important;

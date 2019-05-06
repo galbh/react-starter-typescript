@@ -1,10 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import GeneralUtils from '../../common/utils.js';
-import UserMenuComponent from './user-menu.component.jsx';
+import UserMenuComponent from './user-menu.component';
+import TestUtils from '../../../utils/test-utils';
 
 describe('UserMenuComponent', () => {
-  let wrapper;
+  let wrapper: any;
   const onClick = jasmine.createSpy('onClick');
   const menuItems = [{
     label: 'Settings',
@@ -12,26 +12,25 @@ describe('UserMenuComponent', () => {
   }, {
     label: 'Logout',
     onItemClick: onClick
-  }
-  ];
+  }];
+
   const component = (
     <UserMenuComponent
       user={{
         email: 'guy@dsmadmas',
         firstName: 'Guy',
         lastName: 'Engel',
-        userId: 'userId'
+        id: 'userId'
       }}
       open={false}
       listOfItems={menuItems}
     />
-
   );
 
-  beforeAll(() => GeneralUtils.renderIntoDocument(component));
+  const utils = new TestUtils(component);
 
   beforeEach(() => {
-    wrapper = mount(component);
+    wrapper = mount(utils.getWrapper());
   });
 
   it('check default props', () => {
@@ -42,7 +41,7 @@ describe('UserMenuComponent', () => {
     const button = wrapper.find('.userMenuComponent').first();
     const toggle = button.find('.userContainer svg').first();
     // initial state, drop down is close
-    expect(toggle.instance()).toHaveClass('arrow-down');
+    expect(toggle.hasClass('arrow-down')).toBeTruthy();
   });
 
   it('check if callback is being called', () => {

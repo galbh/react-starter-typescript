@@ -8,9 +8,9 @@ import i18n from '../i18n';
 import { ROUTES } from './constants';
 import { myTheme } from '../assets/themes/default';
 
-import HomePage from '../features/pages/home/home.page.jsx';
+import HomePage from '../features/pages/home/home.page';
 import AboutPage from '../features/pages/about/about.page';
-import PageNotFound from '../features/pages/not-found/not-found.page.jsx';
+import PageNotFound from '../features/pages/not-found/not-found.page';
 import DefaultLayout from '../features/pages/default-layout/default-layout.page';
 import App from '../features/pages/app/app.page';
 

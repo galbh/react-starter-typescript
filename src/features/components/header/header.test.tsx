@@ -1,20 +1,16 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { mount } from 'enzyme';
-import { I18nextProvider } from 'react-i18next';
-import i18n from '../../../i18nForTest';
-import HeaderComponent from './header.component.jsx';
+import HeaderComponent from './header.component';
+import TestUtils from '../../../utils/test-utils';
 
 describe('HeaderComponent', () => {
-  let wrapper;
+  let wrapper: any;
   const openDrawer = jasmine.createSpy('openDrawer');
 
   beforeEach(() => {
-    const component = (
-      <I18nextProvider i18n={i18n}>
-        <HeaderComponent title="test" openDrawer={openDrawer} />
-      </I18nextProvider>
-    );
-    wrapper = mount(component);
+    const component = <HeaderComponent title="test" openDrawer={openDrawer} />;
+    const utils = new TestUtils(component);
+    wrapper = mount(utils.getWrapper());
   });
 
   it('should contain menu button', () => {

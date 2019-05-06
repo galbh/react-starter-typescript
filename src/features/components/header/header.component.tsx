@@ -9,7 +9,7 @@ import UserMenuComponent from '../user-menu/user-menu.component';
 
 interface Iprops {
   openDrawer: React.EventHandler<any>,
-  loggedInUser: Iuser,
+  loggedInUser?: Iuser,
   title: string
 }
 

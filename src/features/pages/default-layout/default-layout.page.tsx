@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import HeaderComponent from '../../components/header/header.component';
-import Container from './styles';
+import { Container, GlobalStyle } from './styles';
 import { bindActionCreators } from 'redux';
 import { StartLoaderAction, StopLoaderAction, ChangeLanguageAction } from '../../../common/state/shared/shared.actions.js';
 import { FetchLoggedInUserAction } from '../../../common/state/auth/auth.actions.js';
 import Iuser from '../../../common/state/auth/auth.models';
-import SpinnerComponent from '../../components/spinner/spinner.component.jsx';
+import SpinnerComponent from '../../components/spinner/spinner.component';
 import DrawerComponent from '../../components/drawer/drawer.component';
 import { OpenDrawerAction, CloseDrawerAction } from '../../../common/state/drawer/drawer.actions';
 import urlTitleDictionary from '../../../common/state/shared/url-title-dictionary';
@@ -33,7 +33,7 @@ interface Iprops {
 const DefaultLayout: React.FC<Iprops> = ({
   user, path, component: Component, openDrawer, closeDrawer, changeLanguage,
   startLoader, fetchUser, stopLoader, loading, isDrawerRender, languages, language, isRtl
-}) => {  
+}) => {
 
   useEffect(() => {
     startLoader();
@@ -56,6 +56,8 @@ const DefaultLayout: React.FC<Iprops> = ({
             />
 
             <Container>
+
+              <GlobalStyle />
 
               {loading && <SpinnerComponent />}
 
