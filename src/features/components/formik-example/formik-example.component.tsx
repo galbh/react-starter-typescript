@@ -18,8 +18,8 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
     <Form style={{ color: '#000', padding: 32 }}>
       <h1>{message}</h1>
       <Field type="email" name="email">
-        {({ field }: any) => (
-          <TextField type="text" {...field} placeholder="First Name" />
+        {(props: any) => (
+          <TextField type="text" {...props.field} placeholder="First Name" />
         )}
       </Field>
       {touched.email && errors.email && <div>{errors.email}</div>}
