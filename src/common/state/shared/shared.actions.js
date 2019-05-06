@@ -1,4 +1,4 @@
-import i18n from "../../../i18n";
+import i18n from '../../../i18n';
 
 export const LOADING_START = 'LOADING_START';
 export const LOADING_DONE = 'LOADING_DONE';

@@ -1,13 +1,13 @@
 import styled, { createGlobalStyle } from 'styled-components';
 
 export const Container = styled.div`
-  padding: ${({ theme }) => theme.frame_padding};
+  padding: ${({ theme }) => theme.framePadding};
   overflow: auto;
   height: calc(100vh - 60px);
-  background: ${({ theme }) => theme.primary_background_color};
+  background: ${({ theme }) => theme.primaryBackgroundColor};
 
-  > div{
-    padding: ${({ theme }) => theme.spacing.frame_padding};
+  > div {
+    padding: ${({ theme }) => theme.spacing.framePadding};
   }
 `;
 
@@ -23,4 +23,4 @@ export const GlobalStyle = createGlobalStyle`
     src: url('/fonts/OpenSans/OpenSans-Light.ttf') format('truetype');
     font-weight: light;
   }
-`
+`;

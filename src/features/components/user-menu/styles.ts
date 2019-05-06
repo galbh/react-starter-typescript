@@ -7,7 +7,8 @@ const dividerPrimaryColor = '#919191';
 const primaryTextColor = '#4a4a4a';
 const toggleBtnPrimaryColor = '#4b4b4b';
 const border = ` 1px solid ${dividerPrimaryColor}`;
-const flexDirection = (props: Iprops) => props.direction === 'rtl' && 'row-reverse';
+const flexDirection = (props: Iprops) =>
+  props.direction === 'rtl' && 'row-reverse';
 
 interface Iprops {
   direction: string;
@@ -15,43 +16,42 @@ interface Iprops {
 
 export const Button: any = styled(MaterialButton)`
   padding: 0 13px !important;
-  border-radius: 1px!important;
+  border-radius: 1px !important;
   height: 36px;
-  width: 173px!important;
+  width: 173px !important;
   text-transform: capitalize !important;
   font-weight: light;
 
-  &&{
+  && {
     border-left: ${(props: Iprops) => props.direction === 'ltr' && border};
     border-right: ${(props: Iprops) => props.direction === 'rtl' && border};
   }
-  
-  &:disabled{
+
+  &:disabled {
     opacity: 0.5;
   }
-  
+
   &:hover {
-    background-color: transparent !important;  
+    background-color: transparent !important;
   }
-  
+
   .buttonContainer {
     width: 100%;
     display: flex;
     justify-content: space-between;
     flex-direction: ${flexDirection};
-    div{
+    div {
       flex-direction: ${flexDirection};
     }
-  } 
+  }
 `;
 
 export const Menu: AnyStyledComponent = styled(MaterialMenu)`
-
-  div[role=document] {    
+  div[role='document'] {
     //this is the menu the opened once the user click on the button
-    ul[role=menu]{
+    ul[role='menu'] {
       width: 173px !important;
-      
+
       li {
         text-transform: capitalize !important;
       }
@@ -60,13 +60,13 @@ export const Menu: AnyStyledComponent = styled(MaterialMenu)`
 `;
 
 export const Avatar: AnyStyledComponent = styled(MaterialAvatar)`
-      width: 36px !important;
-      height: 36px !important;
-      background: #fff;
-  
-      img{
-        width: 100%;
-      }
+  width: 36px !important;
+  height: 36px !important;
+  background: #fff;
+
+  img {
+    width: 100%;
+  }
 `;
 
 export const UserContainer: AnyStyledComponent = styled.div`
@@ -76,7 +76,7 @@ export const UserContainer: AnyStyledComponent = styled.div`
       
       .userName {
         color: ${primaryTextColor};
-        font-size: ${({ theme }) => theme.sizes.font_size_regular}
+        font-size: ${({ theme }) => theme.sizes.fontSizeRegular}
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;

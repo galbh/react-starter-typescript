@@ -1,5 +1,10 @@
 import sharedState from './shared.state';
-import { LOADING_START, LOADING_DONE, CHANGE_LANGUAGE, ON_SCREEN_RESIZE } from './shared.actions';
+import {
+  LOADING_START,
+  LOADING_DONE,
+  CHANGE_LANGUAGE,
+  ON_SCREEN_RESIZE
+} from './shared.actions';
 import { MOBILE_MAX_WIDTH } from '../../constants';
 
 function sharedReducer(state = sharedState, action) {
