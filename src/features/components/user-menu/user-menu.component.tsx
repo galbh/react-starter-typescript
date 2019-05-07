@@ -36,7 +36,7 @@ const UserMenuComponent: React.FC<Iprops> = props => {
     setAnchorEl(null);
   };
 
-  const listItems = listOfItems.map((item: ImenuItem, index: number) => (
+  const listItems = listOfItems.map((item: ImenuItem) => (
     <MenuItem key={item.label} onClick={item.onItemClick}>
       {item.label}
     </MenuItem>
