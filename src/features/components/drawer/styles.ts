@@ -2,60 +2,63 @@ import styled, { AnyStyledComponent } from 'styled-components';
 import { Drawer, ExpansionPanel } from '@material-ui/core';
 
 export const StyledDrawer: AnyStyledComponent = styled(Drawer)`
-  &&, && li{
-    font-size: ${({ theme }) => theme.sizes.font_size_regular};
+  &&,
+  && li {
+    font-size: ${({ theme }) => theme.sizes.fontSizeRegular};
   }
-  
+
   > div:nth-child(2) {
-    width: 120px!important;
-    background: ${({ theme }) => theme.colors.primary_dark}    
+    width: 120px !important;
+    background: ${({ theme }) => theme.colors.primaryDark};
   }
 
   height: 100%;
 `;
 
 export const Wrapper = styled.div`
-  width: 100%!important;
+  width: 100% !important;
   height: 100%;
-  
-  div, span, svg{
-    color: ${({ theme }) => theme.colors.primary_icon_color};
+
+  div,
+  span,
+  svg {
+    color: ${({ theme }) => theme.colors.primaryIconColor};
   }
 
-  a.active > li{
-    background: ${({ theme }) => theme.colors.primary_selected_text_color};
+  a.active > li {
+    background: ${({ theme }) => theme.colors.primarySelectedTextColor};
     font-weight: bold;
-  
-    &:hover{
-      background: ${({ theme }) => theme.colors.primary_selected_text_color};
+
+    &:hover {
+      background: ${({ theme }) => theme.colors.primarySelectedTextColor};
     }
-  
+
     * {
-      color: ${({ theme }) => theme.colors.secondary_background_color};
+      color: ${({ theme }) => theme.colors.secondaryBackgroundColor};
     }
   }
 
-  .selected span{
-    color: ${({ theme }) => theme.colors.primary_background_color};
+  .selected span {
+    color: ${({ theme }) => theme.colors.primaryBackgroundColor};
     font-weight: bold;
   }
 
-  div{
-    flex-grow: 0;    
+  div {
+    flex-grow: 0;
   }
 
-  .logo{
+  .logo {
     border-right: none;
     display: flex;
     justify-content: center;
     height: 60px;
-    background: ${({ theme }) => theme.colors.primary_dark}
+    background: ${({ theme }) => theme.colors.primaryDark};
   }
 
-  a{
-    text-decoration: none!important;
+  a {
+    text-decoration: none !important;
 
-    li{
+    li {
       padding: 0;
       text-transform: uppercase;
       height: 100px;
@@ -64,15 +67,15 @@ export const Wrapper = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      
-      &:hover{
+
+      &:hover {
         background: inherit;
       }
-      
-      img{
+
+      img {
         max-width: 50px;
       }
-    }    
+    }
   }
 `;
 
@@ -82,7 +85,7 @@ export const Logo = styled.div`
   justify-content: center;
   height: 60px;
 
-  > img{
+  > img {
     width: 100%;
   }
 `;
@@ -97,7 +100,7 @@ export const Languages: AnyStyledComponent = styled(ExpansionPanel)`
   font-size: inherit;
   background: inherit;
   margin: 0;
-  span{
-    font-size: ${({ theme }) => theme.sizes.font_size_regular};
+  span {
+    font-size: ${({ theme }) => theme.sizes.fontSizeRegular};
   }
 `;

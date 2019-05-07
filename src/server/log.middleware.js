@@ -5,7 +5,7 @@ const useLog = (router, filename, prefix) => {
     const requestUrl = `${prefix}${req.url}`;
     const body = JSON.stringify(req.body);
     const params = JSON.stringify(req.params);
-    const delimiter = "--------------------------------------------";
+    const delimiter = '--------------------------------------------';
     const log = `[${filename}]: ${date}
       \nurl: ${req.method} ${requestUrl}
       \nbody: ${body}

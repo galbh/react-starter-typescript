@@ -14,9 +14,9 @@ class HttpService {
       headers,
       credentials: 'same-origin',
       body
-    }).then((res) => {
+    }).then(res => {
       if (res.ok) {
-        return res.text().then((text) => {
+        return res.text().then(text => {
           if (text && this.isValidJsonString(text)) {
             return JSON.parse(text);
           }
@@ -24,7 +24,7 @@ class HttpService {
         });
       }
 
-      return res.json().then((json) => {
+      return res.json().then(json => {
         throw new Error(json.message || json.status);
       });
     });

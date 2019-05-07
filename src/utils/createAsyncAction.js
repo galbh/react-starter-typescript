@@ -1,8 +1,12 @@
-import { STARTED_SUFFIX, SUCCESS_SUFFIX, FAILED_SUFFIX } from '../common/constants';
+import {
+  STARTED_SUFFIX,
+  SUCCESS_SUFFIX,
+  FAILED_SUFFIX
+} from '../common/constants';
 import { OpenDialogAction } from '../common/state/dialog/dialog.actions';
 import { StopLoaderAction } from '../common/state/shared/shared.actions';
 
-export default function createAsyncAction (type, fn, disableLoader) {
+export default function createAsyncAction(type, fn) {
   return (...args) => async (dispatch, getState) => {
     // dispatch starting action
     dispatch({

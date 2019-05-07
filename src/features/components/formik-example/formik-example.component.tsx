@@ -1,6 +1,7 @@
 import React from 'react';
 import { withFormik, FormikProps, FormikErrors, Form, Field } from 'formik';
 import TextField from '@material-ui/core/TextField';
+
 // Shape of form values
 interface FormValues {
   email: string;
@@ -17,8 +18,8 @@ const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
     <Form style={{ color: '#000', padding: 32 }}>
       <h1>{message}</h1>
       <Field type="email" name="email">
-        {({ field, form }: any) => (
-          <TextField type="text" {...field} placeholder="First Name" />
+        {(props: any) => (
+          <TextField type="text" {...props.field} placeholder="First Name" />
         )}
       </Field>
       {touched.email && errors.email && <div>{errors.email}</div>}
@@ -41,7 +42,7 @@ interface MyFormProps {
 
 const isValidEmail = (email: any) => {
   return email.length > 10;
-}
+};
 
 // Wrap our form with the using withFormik HoC
 const formOptions = {
@@ -49,7 +50,7 @@ const formOptions = {
   mapPropsToValues: (props: any) => {
     return {
       email: props.initialEmail || '',
-      password: '',
+      password: ''
     };
   },
 
@@ -67,15 +68,13 @@ const formOptions = {
   handleSubmit: (values: FormValues, { setSubmitting }: any) => {
     // do submitting things
     setSubmitting(false);
-    console.log(values);
-  },
+    // console.log(values);
+  }
 };
 
 const MyForm = withFormik<MyFormProps, FormValues>(formOptions)(InnerForm);
 
 // Use <MyForm /> wherevs
-const Basic = () => (
-  <MyForm message="Test Formik" />
-);
+const Basic = () => <MyForm message="Test Formik" />;
 
 export default Basic;

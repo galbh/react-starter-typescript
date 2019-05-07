@@ -8,7 +8,6 @@
     "@types/enzyme": "3.9.1",
     "@types/jest": "24.0.12",
     "@types/node": "11.13.8",
-    "@types/react": "16.8.15",
     "@types/react-dom": "16.8.4",
     "@types/react-redux": "7.0.8",
     "@types/react-router-dom": "4.3.2",
@@ -30,7 +29,7 @@
     "react-redux": "5.0.6",
     "react-router-dom": "5.0.0",
     "react-scripts": "3.0.0",
-    "react-test-renderer": "^16.8.6",
+    "react-test-renderer": "16.8.6",
     "redux": "3.7.2",
     "redux-logger": "3.0.6",
     "redux-thunk": "2.2.0",
@@ -40,9 +39,9 @@
     "yup": "0.27.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -59,5 +58,18 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react": "16.8.16",
+    "@typescript-eslint/eslint-plugin": "1.7.0",
+    "@typescript-eslint/parser": "1.7.0",
+    "customize-cra": "0.2.12",
+    "eslint": "5.16.0",
+    "eslint-config-prettier": "4.2.0",
+    "eslint-config-react": "1.1.7",
+    "eslint-plugin-prettier": "3.0.1",
+    "eslint-plugin-react": "7.13.0",
+    "prettier": "1.17.0",
+    "react-app-rewired": "2.1.3"
   }
 }

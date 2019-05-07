@@ -1,7 +1,7 @@
 import styled, { AnyStyledComponent } from 'styled-components';
 
 const Container: AnyStyledComponent = styled.div`
-  &&{
+  && {
     padding: 0;
     width: 100%;
     height: 100%;
@@ -13,8 +13,8 @@ const Container: AnyStyledComponent = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    
-    svg{
+
+    svg {
       color: $primary-background-color;
     }
   }

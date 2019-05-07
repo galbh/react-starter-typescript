@@ -8,12 +8,16 @@ import Iuser from '../../../common/state/auth/auth.models';
 import UserMenuComponent from '../user-menu/user-menu.component';
 
 interface Iprops {
-  openDrawer: React.EventHandler<any>,
-  loggedInUser?: Iuser,
-  title: string
+  openDrawer: React.EventHandler<any>;
+  loggedInUser?: Iuser;
+  title: string;
 }
 
-const HeaderComponent: React.FC<Iprops> = ({ openDrawer, loggedInUser: user, title }) => {
+const HeaderComponent: React.FC<Iprops> = ({
+  openDrawer,
+  loggedInUser: user,
+  title
+}) => {
   const [t] = useTranslation();
   return (
     <div>
@@ -23,14 +27,15 @@ const HeaderComponent: React.FC<Iprops> = ({ openDrawer, loggedInUser: user, tit
             <MenuIcon />
           </IconButton>
           <Title>{t(title)}</Title>
-          {
-            user &&
+          {user && (
             <UserMenuComponent
               user={user}
               open={false}
-              listOfItems={[{label: 'test', onItemClick: () => alert('test')}]}
+              listOfItems={[
+                { label: 'test', onItemClick: () => alert('test') }
+              ]}
             />
-          }
+          )}
         </Toolbar>
       </Header>
     </div>

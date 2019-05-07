@@ -6,13 +6,16 @@ import TestUtils from '../../../utils/test-utils';
 describe('UserMenuComponent', () => {
   let wrapper: any;
   const onClick = jasmine.createSpy('onClick');
-  const menuItems = [{
-    label: 'Settings',
-    onItemClick: onClick
-  }, {
-    label: 'Logout',
-    onItemClick: onClick
-  }];
+  const menuItems = [
+    {
+      label: 'Settings',
+      onItemClick: onClick
+    },
+    {
+      label: 'Logout',
+      onItemClick: onClick
+    }
+  ];
 
   const component = (
     <UserMenuComponent
@@ -49,7 +52,9 @@ describe('UserMenuComponent', () => {
     button.simulate('click');
 
     // click on second option
-    const secondOption = wrapper.find('[role=\'document\'] [role=\'menu\'] li').at(1);
+    const secondOption = wrapper
+      .find("[role='document'] [role='menu'] li")
+      .at(1);
     secondOption.simulate('click');
     expect(onClick).toHaveBeenCalled();
   });

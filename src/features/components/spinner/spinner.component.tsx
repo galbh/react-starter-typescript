@@ -9,10 +9,7 @@ interface Iprops {
 
 const SpinnerComponent = (props: Iprops) => (
   <Container className={props.className}>
-    <CircularProgress
-      size={props.size || 110}
-      thickness={2}
-    />
+    <CircularProgress size={props.size || 110} thickness={2} />
   </Container>
 );
 

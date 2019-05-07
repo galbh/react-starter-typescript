@@ -11,21 +11,15 @@ import {
 } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import { ROUTES } from '../../../common/constants';
-import {
-  StyledDrawer,
-  WrapperRtl,
-  Wrapper,
-  Logo,
-  Languages
-} from './styles';
+import { StyledDrawer, WrapperRtl, Wrapper, Logo, Languages } from './styles';
 
 interface Iprops {
-  closeDrawer: React.EventHandler<any>,
-  open: boolean,
-  languages: any,
-  language: any,
-  onChangeLanguage: React.EventHandler<any>,
-  isRtl: boolean
+  closeDrawer: React.EventHandler<any>;
+  open: boolean;
+  languages: any;
+  language: any;
+  onChangeLanguage: React.EventHandler<any>;
+  isRtl: boolean;
 }
 
 const DrawerComponent: React.FC<Iprops> = ({
@@ -46,8 +40,9 @@ const DrawerComponent: React.FC<Iprops> = ({
       onClose={closeDrawer}
     >
       <Container>
-
-        <Logo><img src='https://dummyimage.com/200x120/000/fff' alt='logo' /></Logo>
+        <Logo>
+          <img src="https://dummyimage.com/200x120/000/fff" alt="logo" />
+        </Logo>
 
         <DrawerLink
           to={ROUTES.home}
@@ -67,48 +62,45 @@ const DrawerComponent: React.FC<Iprops> = ({
         <Languages style={{ margin: 0, background: 'inherit' }}>
           <ExpansionPanelSummary>{t('LANGUAGES')}</ExpansionPanelSummary>
           <List>
-            {
-              Object.keys(languages).map((l: string) => (
-                <ListItem
-                  key={l}
-                  button
-                  className={language === languages[l] ? 'selected' : ''}
-                  onClick={() => onChangeLanguage(languages[l])}
-                >
-                  <ListItemText primary={l} />
-                </ListItem>
-              ))
-            }
+            {Object.keys(languages).map((l: string) => (
+              <ListItem
+                key={l}
+                button
+                className={language === languages[l] ? 'selected' : ''}
+                onClick={() => onChangeLanguage(languages[l])}
+              >
+                <ListItemText primary={l} />
+              </ListItem>
+            ))}
           </List>
         </Languages>
-
       </Container>
     </StyledDrawer>
   );
 };
 
 interface IdrawerLinkProps {
-  closeDrawer: React.EventHandler<any>,
-  iconSrc?: string,
-  label: string,
-  to: string,
-  icon?: React.ReactElement
+  closeDrawer: React.EventHandler<any>;
+  iconSrc?: string;
+  label: string;
+  to: string;
+  icon?: React.ReactElement;
 }
 
 const DrawerLink: React.FC<IdrawerLinkProps> = ({
-  closeDrawer, iconSrc, label, to, icon
+  closeDrawer,
+  iconSrc,
+  label,
+  to,
+  icon
 }) => (
-    <NavLink
-      activeClassName="active"
-      to={to}
-    >
-      <MenuItem onClick={closeDrawer}>
-        {icon}
-        {!icon && iconSrc && <img src={iconSrc} alt={`${label} link`} />}
-        <span>{label}</span>
-      </MenuItem>
-    </NavLink>
-  );
-
+  <NavLink activeClassName="active" to={to}>
+    <MenuItem onClick={closeDrawer}>
+      {icon}
+      {!icon && iconSrc && <img src={iconSrc} alt={`${label} link`} />}
+      <span>{label}</span>
+    </MenuItem>
+  </NavLink>
+);
 
 export default DrawerComponent;
