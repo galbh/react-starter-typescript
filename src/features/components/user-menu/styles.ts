@@ -14,7 +14,7 @@ interface Iprops {
   direction: string;
 }
 
-export const Button: any = styled(MaterialButton)`
+export const Button: AnyStyledComponent = styled(MaterialButton)`
   padding: 0 13px !important;
   border-radius: 1px !important;
   height: 36px;

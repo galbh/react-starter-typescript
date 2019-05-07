@@ -1,74 +1,79 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, Matching } from 'react-redux';
 import HeaderComponent from '../../components/header/header.component';
 import { Container, GlobalStyle } from './styles';
-import { bindActionCreators } from 'redux';
-import {
-  StartLoaderAction,
-  StopLoaderAction,
-  ChangeLanguageAction
-} from '../../../common/state/shared/shared.actions.js';
-import { FetchLoggedInUserAction } from '../../../common/state/auth/auth.actions.js';
-import Iuser from '../../../common/state/auth/auth.models';
-import SpinnerComponent from '../../components/spinner/spinner.component';
-import DrawerComponent from '../../components/drawer/drawer.component';
-import {
-  OpenDrawerAction,
-  CloseDrawerAction
-} from '../../../common/state/drawer/drawer.actions';
+import { Dispatch } from 'redux';
+// import {
+//   StartLoaderAction,
+//   StopLoaderAction,
+//   ChangeLanguageAction
+// } from '../../../common/state/shared/shared.actions';
+// import { FetchLoggedInUserAction } from '../../../common/state/auth/auth.actions';
+import User from '../../../common/state/auth/auth.models';
+// import SpinnerComponent from '../../components/spinner/spinner.component';
+// import DrawerComponent from '../../components/drawer/drawer.component';
+// import {
+//   OpenDrawerAction,
+//   CloseDrawerAction
+// } from '../../../common/state/drawer/drawer.actions';
 import urlTitleDictionary from '../../../common/state/shared/url-title-dictionary';
 import { DirectionContext } from '../../../common/contexts';
+import { RootState } from '../../../common/models';
+import { RouteChildrenProps } from 'react-router';
+import { ActionCreator } from 'typesafe-actions';
 
-interface Iprops {
-  user: Iuser;
-  startLoader: Function;
-  stopLoader: Function;
-  fetchUser: Function;
+interface AppProps {
+  user: User;
+  // startLoader: () => void;
+  // stopLoader: () => void;
+  // fetchUser: () => Promise<User>;
   path: string;
-  component: React.FC<any>;
-  openDrawer: React.EventHandler<any>;
-  closeDrawer: React.EventHandler<any>;
-  changeLanguage: React.EventHandler<any>;
-  loading: boolean;
-  isDrawerRender: boolean;
-  isRtl: boolean;
-  languages: string[];
-  language: string;
+  component: React.FC<RouteChildrenProps>;
+  // openDrawer: () => void;
+  // closeDrawer: () => void;
+  // changeLanguage: (args0: string) => void;
+  // loading: boolean;
+  // isDrawerRender: boolean;
+  // isRtl: boolean;
+  // languages: StringMap;
+  // language: string;
 }
 
-const DefaultLayout: React.FC<Iprops> = ({
+const DefaultLayout: React.FC<Matching<AppProps, any>> = ({
   user,
   path,
-  component: Component,
-  openDrawer,
-  closeDrawer,
-  changeLanguage,
-  startLoader,
-  fetchUser,
-  stopLoader,
-  loading,
-  isDrawerRender,
-  languages,
-  language,
-  isRtl
+  component: Component
+  // openDrawer,
+  // closeDrawer,
+  // changeLanguage,
+  // startLoader,
+  // fetchUser
+  // stopLoader,
+  // loading,
+  // isDrawerRender,
+  // languages,
+  // language,
+  // isRtl
 }) => {
-  useEffect(() => {
-    startLoader();
-    fetchUser().then(() => stopLoader());
-  }, [startLoader, fetchUser, stopLoader]);
+  // useEffect(() => {
+  // startLoader();
+  // fetchUser();
+  // .then(() => stopLoader());
+  // }, [fetchUser]); //[startLoader, fetchUser, stopLoader]);
 
   const title: string = urlTitleDictionary[path];
-  const direction: string = isRtl ? 'rtl' : 'ltr';
+  // const direction: string = isRtl ? 'rtl' : 'ltr';
 
   return (
-    <DirectionContext.Provider value={direction}>
+    <DirectionContext.Provider value={'ltr'}>
       <Route
         path={path}
-        render={matchProps => (
-          <div dir={direction}>
+        render={(matchProps: RouteChildrenProps) => (
+          // dir={direction}
+          <div>
             <HeaderComponent
-              openDrawer={openDrawer}
+              openDrawer={() => {}} //openDrawer
               loggedInUser={user}
               title={title}
             />
@@ -76,16 +81,16 @@ const DefaultLayout: React.FC<Iprops> = ({
             <Container>
               <GlobalStyle />
 
-              {loading && <SpinnerComponent />}
+              {/*{loading && <SpinnerComponent />}*/}
 
-              <DrawerComponent
-                languages={languages}
-                language={language}
-                open={isDrawerRender}
-                closeDrawer={closeDrawer}
-                onChangeLanguage={changeLanguage}
-                isRtl={isRtl}
-              />
+              {/*<DrawerComponent*/}
+              {/*  languages={languages}*/}
+              {/*  language={language}*/}
+              {/*  open={isDrawerRender}*/}
+              {/*  closeDrawer={closeDrawer}*/}
+              {/*  onChangeLanguage={changeLanguage}*/}
+              {/*  isRtl={isRtl}*/}
+              {/*/>*/}
 
               {user && <Component {...matchProps} />}
             </Container>
@@ -96,25 +101,25 @@ const DefaultLayout: React.FC<Iprops> = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch<ActionCreator<any>>) => {
   return {
-    startLoader: bindActionCreators(StartLoaderAction, dispatch),
-    stopLoader: bindActionCreators(StopLoaderAction, dispatch),
-    openDrawer: bindActionCreators(OpenDrawerAction, dispatch),
-    closeDrawer: bindActionCreators(CloseDrawerAction, dispatch),
-    fetchUser: bindActionCreators(FetchLoggedInUserAction, dispatch),
-    changeLanguage: bindActionCreators(ChangeLanguageAction, dispatch)
+    // startLoader: bindActionCreators(StartLoaderAction, dispatch),
+    // stopLoader: bindActionCreators(StopLoaderAction, dispatch),
+    // openDrawer: bindActionCreators(OpenDrawerAction, dispatch),
+    // closeDrawer: bindActionCreators(CloseDrawerAction, dispatch),
+    // fetchUser: bindActionCreators(FetchLoggedInUserAction, dispatch)
+    // changeLanguage: bindActionCreators(ChangeLanguageAction, dispatch)
   };
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   return {
-    isRtl: state.shared.isRtl(),
-    user: state.auth.loggedInUser,
-    loading: state.shared.loading,
-    isDrawerRender: state.drawer.isRender,
-    language: state.shared.language,
-    languages: state.shared.supportedLanguages
+    // isRtl: state.shared.isRtl(),
+    user: state.auth.loggedInUser
+    // loading: state.shared.loading,
+    // isDrawerRender: state.drawer.isRender,
+    // language: state.shared.language,
+    // languages: state.shared.supportedLanguages
   };
 };
 

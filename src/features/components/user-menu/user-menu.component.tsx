@@ -1,21 +1,21 @@
-import React, { useState, BaseSyntheticEvent, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import DefaultAvatar from '@material-ui/icons/Person';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import { Button, Menu, Avatar, UserContainer } from './styles';
-import Iuser from '../../../common/state/auth/auth.models';
+import User from '../../../common/state/auth/auth.models';
 import { DirectionContext } from '../../../common/contexts';
 
 interface ImenuItem {
   label: string;
-  onItemClick: React.EventHandler<any>;
+  onItemClick: React.EventHandler<React.SyntheticEvent>;
 }
 
 interface Iprops {
   open: boolean;
-  user: Iuser;
+  user: User;
   listOfItems: ImenuItem[];
   anchorEl?: HTMLElement;
 }
@@ -26,7 +26,7 @@ const UserMenuComponent: React.FC<Iprops> = props => {
   const [anchorEl, setAnchorEl] = useState(null);
   const direction = useContext(DirectionContext);
 
-  const handleClick = (event: BaseSyntheticEvent<object, any, any>) => {
+  const handleClick = (event: React.BaseSyntheticEvent<object>) => {
     setAnchorEl(event.currentTarget);
     setOpen(!isOpen);
   };
