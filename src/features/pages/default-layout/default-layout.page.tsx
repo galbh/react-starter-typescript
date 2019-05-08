@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom';
 import { connect, Matching } from 'react-redux';
 import HeaderComponent from '../../components/header/header.component';
 import { Container, GlobalStyle } from './styles';
-import { Dispatch } from 'redux';
+import { bindActionCreators, Dispatch } from 'redux';
 // import {
 //   StartLoaderAction,
 //   StopLoaderAction,
@@ -17,54 +17,82 @@ import User from '../../../common/state/auth/auth.models';
 //   OpenDrawerAction,
 //   CloseDrawerAction
 // } from '../../../common/state/drawer/drawer.actions';
-import urlTitleDictionary from '../../../common/state/shared/url-title-dictionary';
+import urlTitleDictionary from '../../../common/state/general/url-title-dictionary';
 import { DirectionContext } from '../../../common/contexts';
-import { RootState } from '../../../common/models';
+import { RootState, StringMap } from '../../../common/models';
 import { RouteChildrenProps } from 'react-router';
-import { ActionCreator } from 'typesafe-actions';
+import {
+  CloseDrawerAction,
+  OpenDrawerAction
+} from '../../../common/state/drawer/drawer.actions';
+import DialogComponent from '../../components/dialog/dialog.component';
+import {
+  DialogState,
+  DialogTypes
+} from '../../../common/state/dialog/dialog.state';
+import {
+  CloseDialogAction,
+  OpenDialogAction
+} from '../../../common/state/dialog/dialog.actions';
+import { FetchLoggedInUserAction } from '../../../common/state/auth/auth.actions';
+import {
+  ChangeLanguageAction,
+  StartLoaderAction,
+  StopLoaderAction
+} from '../../../common/state/general/general.actions';
+import SpinnerComponent from '../../components/spinner/spinner.component';
+import DrawerComponent from '../../components/drawer/drawer.component';
 
 interface AppProps {
   user: User;
-  // startLoader: () => void;
-  // stopLoader: () => void;
-  // fetchUser: () => Promise<User>;
+  startLoader: () => void;
+  stopLoader: () => void;
+  fetchUser: () => Promise<User>;
+  isDialogRender: boolean;
   path: string;
   component: React.FC<RouteChildrenProps>;
-  // openDrawer: () => void;
-  // closeDrawer: () => void;
-  // changeLanguage: (args0: string) => void;
-  // loading: boolean;
-  // isDrawerRender: boolean;
-  // isRtl: boolean;
-  // languages: StringMap;
-  // language: string;
+  openDialog: (payload: DialogState) => void;
+  closeDialog: () => void;
+  dialogTitle?: string;
+  dialogContent?: string;
+  loading: boolean;
+  openDrawer: () => void;
+  closeDrawer: () => void;
+  changeLanguage: (args0: string) => void;
+  isDrawerRender: boolean;
+  languages: StringMap;
+  language: string;
 }
 
 const DefaultLayout: React.FC<Matching<AppProps, any>> = ({
   user,
+  fetchUser,
   path,
-  component: Component
-  // openDrawer,
-  // closeDrawer,
-  // changeLanguage,
-  // startLoader,
-  // fetchUser
-  // stopLoader,
-  // loading,
-  // isDrawerRender,
-  // languages,
-  // language,
-  // isRtl
+  isDialogRender,
+  component: Component,
+  openDialog,
+  closeDialog,
+  dialogTitle,
+  dialogContent,
+  loading,
+  startLoader,
+  stopLoader,
+  openDrawer,
+  closeDrawer,
+  changeLanguage,
+  isDrawerRender,
+  languages,
+  language
 }) => {
-  // useEffect(() => {
-  // startLoader();
-  // fetchUser();
-  // .then(() => stopLoader());
-  // }, [fetchUser]); //[startLoader, fetchUser, stopLoader]);
+  useEffect(() => {
+    startLoader();
+    fetchUser()
+      .then(() => openDialog({ title: 'Welcome', content: 'content' }))
+      .then(() => stopLoader());
+  }, [startLoader, stopLoader, fetchUser, openDialog]);
 
   const title: string = urlTitleDictionary[path];
   // const direction: string = isRtl ? 'rtl' : 'ltr';
-
   return (
     <DirectionContext.Provider value={'ltr'}>
       <Route
@@ -81,18 +109,27 @@ const DefaultLayout: React.FC<Matching<AppProps, any>> = ({
             <Container>
               <GlobalStyle />
 
-              {/*{loading && <SpinnerComponent />}*/}
+              {loading && <SpinnerComponent />}
 
-              {/*<DrawerComponent*/}
-              {/*  languages={languages}*/}
-              {/*  language={language}*/}
-              {/*  open={isDrawerRender}*/}
-              {/*  closeDrawer={closeDrawer}*/}
-              {/*  onChangeLanguage={changeLanguage}*/}
-              {/*  isRtl={isRtl}*/}
-              {/*/>*/}
+              <DrawerComponent
+                languages={languages}
+                language={language}
+                open={isDrawerRender}
+                closeDrawer={closeDrawer}
+                onChangeLanguage={changeLanguage}
+                isRtl={false}
+              />
 
               {user && <Component {...matchProps} />}
+
+              {isDialogRender && (
+                <DialogComponent
+                  title={dialogTitle}
+                  content={dialogContent}
+                  open={isDialogRender}
+                  onClose={closeDialog}
+                />
+              )}
             </Container>
           </div>
         )}
@@ -101,25 +138,31 @@ const DefaultLayout: React.FC<Matching<AppProps, any>> = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<ActionCreator<any>>) => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
-    // startLoader: bindActionCreators(StartLoaderAction, dispatch),
-    // stopLoader: bindActionCreators(StopLoaderAction, dispatch),
-    // openDrawer: bindActionCreators(OpenDrawerAction, dispatch),
-    // closeDrawer: bindActionCreators(CloseDrawerAction, dispatch),
-    // fetchUser: bindActionCreators(FetchLoggedInUserAction, dispatch)
-    // changeLanguage: bindActionCreators(ChangeLanguageAction, dispatch)
+    openDialog: bindActionCreators(OpenDialogAction, dispatch),
+    closeDialog: bindActionCreators(CloseDialogAction, dispatch),
+    startLoader: bindActionCreators(StartLoaderAction, dispatch),
+    stopLoader: bindActionCreators(StopLoaderAction, dispatch),
+    openDrawer: bindActionCreators(OpenDrawerAction, dispatch),
+    closeDrawer: bindActionCreators(CloseDrawerAction, dispatch),
+    fetchUser: bindActionCreators(FetchLoggedInUserAction, dispatch),
+    changeLanguage: bindActionCreators(ChangeLanguageAction, dispatch)
   };
 };
 
 const mapStateToProps = (state: RootState) => {
+  const { general, dialog, drawer } = state.view;
+  const { auth } = state.app;
   return {
-    // isRtl: state.shared.isRtl(),
-    user: state.auth.loggedInUser
-    // loading: state.shared.loading,
-    // isDrawerRender: state.drawer.isRender,
-    // language: state.shared.language,
-    // languages: state.shared.supportedLanguages
+    user: auth.loggedInUser,
+    isDialogRender: dialog.isRender,
+    dialogTitle: dialog.title,
+    dialogContent: dialog.content,
+    loading: general.loading,
+    isDrawerRender: drawer.isRender,
+    language: general.language,
+    languages: general.languages
   };
 };
 
