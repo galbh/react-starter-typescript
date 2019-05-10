@@ -1,7 +1,7 @@
 import endpoints from '../../server/endpoints';
 
 class ApiService {
-  getOptions(key) {
+  public getOptions(key: string) {
     return endpoints[key];
   }
 }

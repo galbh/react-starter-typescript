@@ -9,7 +9,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import User from '../../../common/state/auth/auth.models';
 import urlTitleDictionary from '../../../common/state/general/url-title-dictionary';
 import { DirectionContext } from '../../../common/contexts';
-import { RootState, StringMap } from '../../../common/models';
+import { AsyncAction, RootState, StringMap } from '../../../common/models';
 import { RouteChildrenProps } from 'react-router';
 import {
   CloseDrawerAction,
@@ -22,14 +22,12 @@ import {
   DialogProps,
   OpenDialogAction
 } from '../../../common/state/dialog/dialog.actions';
-import {
-  AuthAsyncAction,
-  FetchLoggedInUserAction
-} from '../../../common/state/auth/auth.actions';
+import { FetchLoggedInUserAction } from '../../../common/state/auth/auth.actions';
 import {
   ChangeLanguageAction,
   GeneralAction,
   GetDirectionAction,
+  OnScreenResizeAction,
   StartLoaderAction,
   StopLoaderAction
 } from '../../../common/state/general/general.actions';
@@ -49,6 +47,7 @@ interface AppProps {
   isDrawerRender: boolean;
   language: string;
   languages: StringMap;
+  isMobile: boolean;
 }
 
 interface DispatchProps {
@@ -61,6 +60,7 @@ interface DispatchProps {
   closeDrawer: () => void;
   changeLanguage: (args0: string) => void;
   getDirection: () => string;
+  onScreenResize: () => void;
 }
 
 // TODO: Find a way to type check this component
@@ -71,6 +71,14 @@ const DefaultLayout: React.FC<any> = (props: AppProps & DispatchProps) => {
   const title = path && !Array.isArray(path) ? urlTitleDictionary[path] : '';
   const Component = props.component;
   const [direction, setDirection] = useState();
+
+  useEffect(() => {
+    window.addEventListener('resize', props.onScreenResize);
+
+    return () => {
+      window.removeEventListener('resize', props.onScreenResize);
+    };
+  });
 
   useEffect(() => {
     setDirection(props.getDirection());
@@ -116,6 +124,7 @@ const DefaultLayout: React.FC<any> = (props: AppProps & DispatchProps) => {
                 content={props.dialogContent}
                 open={props.isDialogRender}
                 onClose={props.closeDialog}
+                isMobile={props.isMobile}
               />
             </Container>
           </div>
@@ -126,9 +135,7 @@ const DefaultLayout: React.FC<any> = (props: AppProps & DispatchProps) => {
 };
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<
-    GeneralAction | AuthAsyncAction | DrawerAction | DialogAction
-  >
+  dispatch: Dispatch<GeneralAction | AsyncAction | DrawerAction | DialogAction>
 ) => {
   return {
     openDialog: bindActionCreators(OpenDialogAction, dispatch),
@@ -139,7 +146,8 @@ const mapDispatchToProps = (
     closeDrawer: bindActionCreators(CloseDrawerAction, dispatch),
     fetchUser: bindActionCreators(FetchLoggedInUserAction, dispatch),
     changeLanguage: bindActionCreators(ChangeLanguageAction, dispatch),
-    getDirection: bindActionCreators(GetDirectionAction, dispatch)
+    getDirection: bindActionCreators(GetDirectionAction, dispatch),
+    onScreenResize: bindActionCreators(OnScreenResizeAction, dispatch)
   };
 };
 
@@ -154,7 +162,8 @@ const mapStateToProps = (state: RootState) => {
     loading: general.loading,
     isDrawerRender: drawer.isRender,
     language: general.language,
-    languages: general.languages
+    languages: general.languages,
+    isMobile: general.isMobile
   };
 };
 

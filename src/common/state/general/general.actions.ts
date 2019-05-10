@@ -42,10 +42,6 @@ export const GetDirectionAction = () => (
   } else {
     direction = Directions.LTR;
   }
-  dispatch({
-    type: GeneralActionTypes.GET_DIRECTION,
-    payload: direction
-  });
   return direction;
 };
 

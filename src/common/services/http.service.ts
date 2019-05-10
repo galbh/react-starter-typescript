@@ -1,7 +1,7 @@
-import fetch from 'isomorphic-fetch';
+import { Endpoint } from '../models';
 
 class HttpService {
-  fetch(options) {
+  fetch(options: Endpoint) {
     const { url, method, body } = options;
     const headers = new Headers();
 
@@ -17,7 +17,7 @@ class HttpService {
     }).then(res => {
       if (res.ok) {
         return res.text().then(text => {
-          if (text && this.isValidJsonString(text)) {
+          if (text) {
             return JSON.parse(text);
           }
           return text;
@@ -28,14 +28,6 @@ class HttpService {
         throw new Error(json.message || json.status);
       });
     });
-  }
-
-  isValidJsonString(string) {
-    /* eslint-disable */
-    return /^[\],:{}\s]*$/.test(string.replace(/\\["\\\/bfnrtu]/g, '@')
-      .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
-      .replace(/(?:^|:|,)(?:\s*\[)+/g, ''));
-    /* eslint-disable */
   }
 }
 

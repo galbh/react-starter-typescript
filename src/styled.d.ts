@@ -21,6 +21,7 @@ declare module 'styled-components' {
 
     sizes: {
       fontSizeRegular: string;
+      fontSizeMedium: string;
     };
   }
 }

@@ -20,7 +20,8 @@ const myTheme: DefaultTheme = {
   },
 
   sizes: {
-    fontSizeRegular: '12px'
+    fontSizeRegular: '12px',
+    fontSizeMedium: '14px'
   }
 };
 

@@ -14,7 +14,7 @@ import { ROUTES } from '../../../common/constants';
 import { StyledDrawer, WrapperRtl, Wrapper, Logo, Languages } from './styles';
 import { StringMap } from '../../../common/models';
 
-interface Iprops {
+interface DrawerProps {
   closeDrawer: React.EventHandler<React.SyntheticEvent>;
   open: boolean;
   languages: StringMap;
@@ -23,7 +23,7 @@ interface Iprops {
   isRtl: boolean;
 }
 
-const DrawerComponent: React.FC<Iprops> = ({
+const DrawerComponent: React.FC<DrawerProps> = ({
   closeDrawer,
   open,
   languages,
@@ -80,7 +80,7 @@ const DrawerComponent: React.FC<Iprops> = ({
   );
 };
 
-interface IdrawerLinkProps {
+interface DrawerLinkProps {
   closeDrawer: React.EventHandler<React.SyntheticEvent>;
   iconSrc?: string;
   label: string;
@@ -88,7 +88,7 @@ interface IdrawerLinkProps {
   icon?: React.ReactElement;
 }
 
-const DrawerLink: React.FC<IdrawerLinkProps> = ({
+const DrawerLink: React.FC<DrawerLinkProps> = ({
   closeDrawer,
   iconSrc,
   label,

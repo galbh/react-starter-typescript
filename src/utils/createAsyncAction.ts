@@ -5,9 +5,21 @@ import {
 } from '../common/constants';
 import { OpenDialogAction } from '../common/state/dialog/dialog.actions';
 import { StopLoaderAction } from '../common/state/general/general.actions';
+import { AnyAction, Dispatch } from 'redux';
+import { RootState } from '../common/models';
 
-export default function createAsyncAction(type, fn) {
-  return (...args) => async (dispatch, getState) => {
+interface Args {
+  id: string;
+}
+
+export default function createAsyncAction(
+  type: string,
+  fn: (args: Args, getState: () => RootState) => Promise<AnyAction>
+) {
+  return ({ ...args }: Args) => async (
+    dispatch: Dispatch<AnyAction>,
+    getState: () => RootState
+  ) => {
     // dispatch starting action
     dispatch({
       type: `${type}${STARTED_SUFFIX}`,
@@ -16,7 +28,7 @@ export default function createAsyncAction(type, fn) {
     let result;
     try {
       // activate promise call back
-      result = await fn(...args, getState);
+      result = await fn(args, getState);
     } catch (error) {
       // dispatch fail action
       dispatch({
@@ -24,8 +36,8 @@ export default function createAsyncAction(type, fn) {
         error: true,
         payload: error
       });
-      dispatch(new StopLoaderAction());
-      dispatch(new OpenDialogAction('error', error.message));
+      dispatch(StopLoaderAction());
+      dispatch(OpenDialogAction({ title: 'error', content: error.message }));
       throw error;
     }
     // dispatch success action
