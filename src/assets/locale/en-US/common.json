@@ -1,5 +1,7 @@
 {
   "HOME_PAGE": "home page",
   "ABOUT_PAGE": "about page",
-  "LANGUAGES": "languages"
+  "LANGUAGES": "languages",
+  "WELCOME": "welcome",
+  "MESSAGE": "message"
 }

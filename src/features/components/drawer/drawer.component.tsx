@@ -12,13 +12,14 @@ import {
 import { NavLink } from 'react-router-dom';
 import { ROUTES } from '../../../common/constants';
 import { StyledDrawer, WrapperRtl, Wrapper, Logo, Languages } from './styles';
+import { StringMap } from '../../../common/models';
 
 interface Iprops {
-  closeDrawer: React.EventHandler<any>;
+  closeDrawer: React.EventHandler<React.SyntheticEvent>;
   open: boolean;
-  languages: any;
-  language: any;
-  onChangeLanguage: React.EventHandler<any>;
+  languages: StringMap;
+  language: string;
+  onChangeLanguage: (args0: string) => void;
   isRtl: boolean;
 }
 
@@ -80,7 +81,7 @@ const DrawerComponent: React.FC<Iprops> = ({
 };
 
 interface IdrawerLinkProps {
-  closeDrawer: React.EventHandler<any>;
+  closeDrawer: React.EventHandler<React.SyntheticEvent>;
   iconSrc?: string;
   label: string;
   to: string;

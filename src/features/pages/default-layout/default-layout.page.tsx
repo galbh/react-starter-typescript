@@ -1,74 +1,96 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import HeaderComponent from '../../components/header/header.component';
 import { Container, GlobalStyle } from './styles';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, Dispatch } from 'redux';
+import User from '../../../common/state/auth/auth.models';
+import urlTitleDictionary from '../../../common/state/general/url-title-dictionary';
+import { DirectionContext } from '../../../common/contexts';
+import { RootState, StringMap } from '../../../common/models';
+import { RouteChildrenProps } from 'react-router';
 import {
+  CloseDrawerAction,
+  DrawerAction,
+  OpenDrawerAction
+} from '../../../common/state/drawer/drawer.actions';
+import {
+  CloseDialogAction,
+  DialogAction,
+  DialogProps,
+  OpenDialogAction
+} from '../../../common/state/dialog/dialog.actions';
+import {
+  AuthAsyncAction,
+  FetchLoggedInUserAction
+} from '../../../common/state/auth/auth.actions';
+import {
+  ChangeLanguageAction,
+  GeneralAction,
+  GetDirectionAction,
   StartLoaderAction,
-  StopLoaderAction,
-  ChangeLanguageAction
-} from '../../../common/state/shared/shared.actions.js';
-import { FetchLoggedInUserAction } from '../../../common/state/auth/auth.actions.js';
-import Iuser from '../../../common/state/auth/auth.models';
+  StopLoaderAction
+} from '../../../common/state/general/general.actions';
 import SpinnerComponent from '../../components/spinner/spinner.component';
 import DrawerComponent from '../../components/drawer/drawer.component';
-import {
-  OpenDrawerAction,
-  CloseDrawerAction
-} from '../../../common/state/drawer/drawer.actions';
-import urlTitleDictionary from '../../../common/state/shared/url-title-dictionary';
-import { DirectionContext } from '../../../common/contexts';
+import DialogComponent from '../../components/dialog/dialog.component';
+import { Directions } from '../../../common/state/general/general.state';
 
-interface Iprops {
-  user: Iuser;
-  startLoader: Function;
-  stopLoader: Function;
-  fetchUser: Function;
+interface AppProps {
   path: string;
-  component: React.FC<any>;
-  openDrawer: React.EventHandler<any>;
-  closeDrawer: React.EventHandler<any>;
-  changeLanguage: React.EventHandler<any>;
+  component: React.FC<RouteChildrenProps>;
+  user: User;
+  isDialogRender: boolean;
+  dialogTitle?: string;
+  dialogContent?: string;
   loading: boolean;
   isDrawerRender: boolean;
-  isRtl: boolean;
-  languages: string[];
   language: string;
+  languages: StringMap;
 }
 
-const DefaultLayout: React.FC<Iprops> = ({
-  user,
-  path,
-  component: Component,
-  openDrawer,
-  closeDrawer,
-  changeLanguage,
-  startLoader,
-  fetchUser,
-  stopLoader,
-  loading,
-  isDrawerRender,
-  languages,
-  language,
-  isRtl
-}) => {
+interface DispatchProps {
+  startLoader: () => void;
+  stopLoader: () => void;
+  fetchUser: () => Promise<User>;
+  openDialog: (payload: DialogProps) => void;
+  closeDialog: () => void;
+  openDrawer: () => void;
+  closeDrawer: () => void;
+  changeLanguage: (args0: string) => void;
+  getDirection: () => string;
+}
+
+// TODO: Find a way to type check this component
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const DefaultLayout: React.FC<any> = (props: AppProps & DispatchProps) => {
+  const [t] = useTranslation();
+  const { startLoader, fetchUser, openDialog, stopLoader, path, user } = props;
+  const title = path && !Array.isArray(path) ? urlTitleDictionary[path] : '';
+  const Component = props.component;
+  const [direction, setDirection] = useState();
+
+  useEffect(() => {
+    setDirection(props.getDirection());
+  }, [props.language]);
+
   useEffect(() => {
     startLoader();
-    fetchUser().then(() => stopLoader());
-  }, [startLoader, fetchUser, stopLoader]);
-
-  const title: string = urlTitleDictionary[path];
-  const direction: string = isRtl ? 'rtl' : 'ltr';
+    fetchUser()
+      .then(() => openDialog({ title: t('WELCOME'), content: t('MESSAGE') }))
+      .then(() => stopLoader());
+  }, [startLoader, stopLoader, fetchUser, openDialog]);
 
   return (
     <DirectionContext.Provider value={direction}>
       <Route
         path={path}
-        render={matchProps => (
+        render={(matchProps: RouteChildrenProps) => (
           <div dir={direction}>
             <HeaderComponent
-              openDrawer={openDrawer}
+              openDrawer={props.openDrawer}
               loggedInUser={user}
               title={title}
             />
@@ -76,18 +98,25 @@ const DefaultLayout: React.FC<Iprops> = ({
             <Container>
               <GlobalStyle />
 
-              {loading && <SpinnerComponent />}
+              {props.loading && <SpinnerComponent />}
 
               <DrawerComponent
-                languages={languages}
-                language={language}
-                open={isDrawerRender}
-                closeDrawer={closeDrawer}
-                onChangeLanguage={changeLanguage}
-                isRtl={isRtl}
+                languages={props.languages}
+                language={props.language}
+                open={props.isDrawerRender}
+                closeDrawer={props.closeDrawer}
+                onChangeLanguage={props.changeLanguage}
+                isRtl={direction === Directions.RTL}
               />
 
               {user && <Component {...matchProps} />}
+
+              <DialogComponent
+                title={props.dialogTitle}
+                content={props.dialogContent}
+                open={props.isDialogRender}
+                onClose={props.closeDialog}
+              />
             </Container>
           </div>
         )}
@@ -96,25 +125,36 @@ const DefaultLayout: React.FC<Iprops> = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (
+  dispatch: Dispatch<
+    GeneralAction | AuthAsyncAction | DrawerAction | DialogAction
+  >
+) => {
   return {
+    openDialog: bindActionCreators(OpenDialogAction, dispatch),
+    closeDialog: bindActionCreators(CloseDialogAction, dispatch),
     startLoader: bindActionCreators(StartLoaderAction, dispatch),
     stopLoader: bindActionCreators(StopLoaderAction, dispatch),
     openDrawer: bindActionCreators(OpenDrawerAction, dispatch),
     closeDrawer: bindActionCreators(CloseDrawerAction, dispatch),
     fetchUser: bindActionCreators(FetchLoggedInUserAction, dispatch),
-    changeLanguage: bindActionCreators(ChangeLanguageAction, dispatch)
+    changeLanguage: bindActionCreators(ChangeLanguageAction, dispatch),
+    getDirection: bindActionCreators(GetDirectionAction, dispatch)
   };
 };
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
+  const { general, dialog, drawer } = state.view;
+  const { auth } = state.app;
   return {
-    isRtl: state.shared.isRtl(),
-    user: state.auth.loggedInUser,
-    loading: state.shared.loading,
-    isDrawerRender: state.drawer.isRender,
-    language: state.shared.language,
-    languages: state.shared.supportedLanguages
+    user: auth.loggedInUser,
+    isDialogRender: dialog.isRender,
+    dialogTitle: dialog.title,
+    dialogContent: dialog.content,
+    loading: general.loading,
+    isDrawerRender: drawer.isRender,
+    language: general.language,
+    languages: general.languages
   };
 };
 

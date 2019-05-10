@@ -4,7 +4,7 @@ import {
   FAILED_SUFFIX
 } from '../common/constants';
 import { OpenDialogAction } from '../common/state/dialog/dialog.actions';
-import { StopLoaderAction } from '../common/state/shared/shared.actions';
+import { StopLoaderAction } from '../common/state/general/general.actions';
 
 export default function createAsyncAction(type, fn) {
   return (...args) => async (dispatch, getState) => {
