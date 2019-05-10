@@ -6,20 +6,25 @@ export enum DialogActionTypes {
   CLOSE_DIALOG = '@@dialog/CLOSE_DIALOG'
 }
 
-interface DialogProps {
+export interface DialogProps {
   title: string;
   content: React.ReactElement | string;
   type?: DialogTypes;
 }
-export const OpenDialogAction = (payload: DialogProps) => {
+
+export const OpenDialogAction = (payload: DialogProps): DialogAction => {
   return {
     type: DialogActionTypes.OPEN_DIALOG,
     payload
   };
 };
 
-export const CloseDialogAction = () => {
+export const CloseDialogAction = (): DialogAction => {
   return {
     type: DialogActionTypes.CLOSE_DIALOG
   };
 };
+
+export type DialogAction =
+  | { type: DialogActionTypes.OPEN_DIALOG; payload: DialogProps }
+  | { type: DialogActionTypes.CLOSE_DIALOG };

@@ -1,10 +1,10 @@
 import { Reducer } from 'redux';
 import dialogInitialState, { DialogState } from './dialog.state';
-import { DialogActionTypes } from './dialog.actions';
+import { DialogAction, DialogActionTypes } from './dialog.actions';
 
 const dialogReducer: Reducer<DialogState> = (
   state = dialogInitialState,
-  action: any
+  action: DialogAction
 ) => {
   switch (action.type) {
     case DialogActionTypes.OPEN_DIALOG:

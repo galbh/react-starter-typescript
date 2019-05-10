@@ -7,13 +7,13 @@ import { Header, Title } from './styles';
 import User from '../../../common/state/auth/auth.models';
 import UserMenuComponent from '../user-menu/user-menu.component';
 
-interface Iprops {
+interface HeaderProps {
   openDrawer: React.EventHandler<React.SyntheticEvent>;
   loggedInUser?: User;
   title: string;
 }
 
-const HeaderComponent: React.FC<Iprops> = ({
+const HeaderComponent: React.FC<HeaderProps> = ({
   openDrawer,
   loggedInUser: user,
   title
