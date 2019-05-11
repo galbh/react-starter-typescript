@@ -23,10 +23,10 @@ function Transition(props: TransitionProps) {
 const DialogComponent = ({ ...props }: DialogProps) => (
   <Dialog
     dir={useContext(DirectionContext)}
-    open={open}
+    open={props.open}
     TransitionComponent={Transition}
     onClose={props.onClose}
-    fullScreen={props.type === DialogTypes.FULL}
+    fullScreen={props.type === DialogTypes.FULL || props.isMobile}
   >
     <DialogTitle>
       <div>{props.title}</div>

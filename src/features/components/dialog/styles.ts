@@ -23,6 +23,7 @@ export const DialogTitle: AnyStyledComponent = styled(MuiDialogTitle)`
     font-family: inherit;
 
     > div {
+      width: 100%;
       min-width: 160px;
 
       &:first-letter {
