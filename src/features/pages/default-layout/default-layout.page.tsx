@@ -5,32 +5,24 @@ import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import HeaderComponent from '../../components/header/header.component';
 import { Container, GlobalStyle } from './styles';
-import { bindActionCreators, Dispatch } from 'redux';
+import { AnyAction, bindActionCreators, Dispatch } from 'redux';
 import User from '../../../common/state/auth/auth.models';
 import urlTitleDictionary from '../../../common/state/general/url-title-dictionary';
 import { DirectionContext } from '../../../common/contexts';
-import {
-  ActionCreator,
-  AsyncAction,
-  RootState,
-  StringMap
-} from '../../../common/models';
+import { ActionCreator, RootState, StringMap } from '../../../common/models';
 import { RouteChildrenProps } from 'react-router';
 import {
   CloseDrawerAction,
-  DrawerAction,
   OpenDrawerAction
 } from '../../../common/state/drawer/drawer.actions';
 import {
   CloseDialogAction,
-  DialogAction,
   DialogProps,
   OpenDialogAction
 } from '../../../common/state/dialog/dialog.actions';
 import { FetchLoggedInUserAction } from '../../../common/state/auth/auth.actions';
 import {
   ChangeLanguageAction,
-  GeneralAction,
   GetDirectionAction,
   OnScreenResizeAction,
   StartLoaderAction,
@@ -137,9 +129,7 @@ const DefaultLayout: React.FC<AppProps & DispatchProps> = ({ ...props }) => {
   );
 };
 
-const mapDispatchToProps = (
-  dispatch: Dispatch<GeneralAction | AsyncAction | DrawerAction | DialogAction>
-) => {
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
   return {
     openDialog: bindActionCreators(OpenDialogAction, dispatch),
     closeDialog: bindActionCreators(CloseDialogAction, dispatch),
