@@ -2,7 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Included Libraries
 * react-redux
-* react-thunk
+* redux-thunk
 * material-ui/core, material-ui/icons
 * styled-components
 * react i18n
