@@ -4,7 +4,6 @@ import { createStore, applyMiddleware, Store } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
-import './index.css';
 import Root from './common/routes';
 import rootReducer, { RootState } from './common/reducers';
 import * as serviceWorker from './serviceWorker';

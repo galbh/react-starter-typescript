@@ -23,4 +23,12 @@ export const GlobalStyle = createGlobalStyle`
     src: url('/fonts/OpenSans/OpenSans-Light.ttf') format('truetype');
     font-weight: light;
   }
+  
+  body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 `;

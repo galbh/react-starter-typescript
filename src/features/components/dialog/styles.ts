@@ -21,6 +21,7 @@ export const DialogTitle: AnyStyledComponent = styled(MuiDialogTitle)`
     align-items: center;
     font-size: ${({ theme }) => theme.sizes.fontSizeMedium};
     font-family: inherit;
+    font-weight: bold;
 
     > div {
       width: 100%;
