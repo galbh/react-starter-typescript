@@ -7,7 +7,7 @@ export enum AuthActionTypes {
   FETCH_LOGGED_IN_USER = '@@auth/FETCH_LOGGED_IN_USER'
 }
 
-export const FetchLoggedInUserAction = createAsyncAction(
+export const FetchLoggedInUserAction: () => Promise<User> = createAsyncAction(
   AuthActionTypes.FETCH_LOGGED_IN_USER,
   () => {
     const options = ApiService.getOptions('fetchLoggedInUser');
@@ -15,7 +15,7 @@ export const FetchLoggedInUserAction = createAsyncAction(
   }
 );
 
-export interface ActionType {
+export interface AuthAction {
   type: AuthActionTypes.FETCH_LOGGED_IN_USER;
   payload?: User;
 }
