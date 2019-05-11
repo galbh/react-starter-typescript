@@ -1,7 +1,7 @@
 import i18n from '../../../i18n';
 import { Dispatch } from 'redux';
 import { Directions, RtlLanguages, SupportedLanguages } from './general.state';
-import { RootState } from '../../models';
+import { ActionCreator, RootState } from '../../models';
 
 export enum GeneralActionTypes {
   LOADING_START = '@@general/LOADING_START',
@@ -31,7 +31,7 @@ export const ChangeLanguageAction = (language: string): GeneralAction => {
   };
 };
 
-export const GetDirectionAction = () => (
+export const GetDirectionAction: ActionCreator = () => (
   dispatch: Dispatch<GeneralAction>,
   getState: () => RootState
 ) => {

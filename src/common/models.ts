@@ -1,7 +1,6 @@
 import { Action, StateType } from 'typesafe-actions';
 import rootReducer from './reducers';
-import { Dispatch } from 'redux';
-import { ActionType } from './state/auth/auth.actions';
+import { AnyAction, Dispatch } from 'redux';
 
 export interface StringMap {
   [s: string]: string;
@@ -16,10 +15,11 @@ export interface Endpoint {
   body?: any;
 }
 
-export type AsyncAction = (
+export type AsyncAction = (type: string, fn: () => Promise<any>) => any;
+
+export type ActionCreator = (
   args?: any
 ) => (
   dispatch: Dispatch<Action>,
   getState: () => RootState
-) => Promise<ActionType>;
-
+) => any;

@@ -6,16 +6,16 @@ import {
 import { OpenDialogAction } from '../common/state/dialog/dialog.actions';
 import { StopLoaderAction } from '../common/state/general/general.actions';
 import { AnyAction, Dispatch } from 'redux';
-import { RootState } from '../common/models';
+import { AsyncAction, RootState } from '../common/models';
 
 interface Args {
   id: string;
 }
 
-export default function createAsyncAction(
+const createAsyncAction: AsyncAction = (
   type: string,
   fn: (args: Args, getState: () => RootState) => Promise<AnyAction>
-) {
+) => {
   return ({ ...args }: Args) => async (
     dispatch: Dispatch<AnyAction>,
     getState: () => RootState
@@ -48,4 +48,6 @@ export default function createAsyncAction(
 
     return result;
   };
-}
+};
+
+export default createAsyncAction;

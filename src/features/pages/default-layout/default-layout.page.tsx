@@ -9,7 +9,12 @@ import { bindActionCreators, Dispatch } from 'redux';
 import User from '../../../common/state/auth/auth.models';
 import urlTitleDictionary from '../../../common/state/general/url-title-dictionary';
 import { DirectionContext } from '../../../common/contexts';
-import { AsyncAction, RootState, StringMap } from '../../../common/models';
+import {
+  ActionCreator,
+  AsyncAction,
+  RootState,
+  StringMap
+} from '../../../common/models';
 import { RouteChildrenProps } from 'react-router';
 import {
   CloseDrawerAction,
@@ -39,10 +44,10 @@ import { Directions } from '../../../common/state/general/general.state';
 interface AppProps {
   path: string;
   component: React.FC<RouteChildrenProps>;
-  user: User;
+  user?: User;
   isDialogRender: boolean;
   dialogTitle?: string;
-  dialogContent?: string;
+  dialogContent?: React.ReactElement | string;
   loading: boolean;
   isDrawerRender: boolean;
   language: string;
@@ -59,13 +64,11 @@ interface DispatchProps {
   openDrawer: () => void;
   closeDrawer: () => void;
   changeLanguage: (args0: string) => void;
-  getDirection: () => string;
+  getDirection: ActionCreator;
   onScreenResize: () => void;
 }
 
-// TODO: Find a way to type check this component
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const DefaultLayout: React.FC<any> = (props: AppProps & DispatchProps) => {
+const DefaultLayout: React.FC<AppProps & DispatchProps> = ({ ...props }) => {
   const [t] = useTranslation();
   const { startLoader, fetchUser, openDialog, stopLoader, path, user } = props;
   const title = path && !Array.isArray(path) ? urlTitleDictionary[path] : '';
