@@ -1,5 +1,6 @@
 {
   "name": "react-starter-typescript",
+  "author": "Gal Ben Haim",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -72,6 +73,6 @@
     "eslint-plugin-react": "7.13.0",
     "prettier": "1.17.0",
     "react-app-rewired": "2.1.3",
-    "typesafe-actions": "^4.2.0"
+    "typesafe-actions": "4.2.0"
   }
 }
