@@ -15,17 +15,13 @@ class HttpService {
       credentials: 'same-origin',
       body
     }).then(res => {
+      const isJson = HttpService.isJson(res);
       if (res.ok) {
-        return res.text().then(text => {
-          if (text) {
-            return JSON.parse(text);
-          }
-          return text;
-        });
+        if (isJson) {
+          return res.json();
+        }
+        return res.text();
       }
-      const contentType = res.headers.get('content-type');
-      const isJson =
-        contentType && contentType.indexOf('application/json') !== -1;
 
       if (isJson) {
         return res.json().then(data => {
@@ -36,6 +32,11 @@ class HttpService {
         throw new Error(data);
       });
     });
+  }
+
+  static isJson(res: Response) {
+    const contentType = res.headers.get('content-type');
+    return contentType && contentType.indexOf('application/json') !== -1;
   }
 }
 
