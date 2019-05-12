@@ -23,9 +23,17 @@ class HttpService {
           return text;
         });
       }
+      const contentType = res.headers.get('content-type');
+      const isJson =
+        contentType && contentType.indexOf('application/json') !== -1;
 
-      return res.json().then(json => {
-        throw new Error(json.message || json.status);
+      if (isJson) {
+        return res.json().then(data => {
+          throw new Error(data.message || data.status);
+        });
+      }
+      return res.text().then(data => {
+        throw new Error(data);
       });
     });
   }
